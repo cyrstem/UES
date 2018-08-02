@@ -9,33 +9,39 @@
 #include "Particles.h"
 Particle::Particle()
 {
+    mMass =1.0f;
     pos = glm::vec3(0,0,0);
     vel=  glm::vec3(0,0,0);
     acc = glm::vec3(0,0,0);
 }
 
- Particle::Particle(float s, float x, float y, float z)
+ Particle::Particle(float m, float x, float y, float z)
 {
-    s = 10;
-    acc +=1;
+    mMass = m;
+    acc +=ofRandom(-7,1);
     pos = glm::vec3(x,y,z);
     pos+=acc;
 }
 
 void Particle::update(float dt)
 {
-    vel +=0.01 ;
-    pos += vel * dt;
+    vel +=acc+dt;
+    pos += 0;
+    acc *= 0;
     
 }
 
 void Particle::draw()
 {
+    //ofPushMatrix();
+    ofDrawRectangle(0, 0, 700, 700);
     ofPushStyle();
     ofSetColor(255);
     ofFill();
     ofDrawSphere(pos, 10);
     ofPopStyle();
+    //ofPopMatrix();
+    
 }
 
 void Particle::applyForce( glm::vec3 force){
@@ -43,30 +49,32 @@ void Particle::applyForce( glm::vec3 force){
     acc +=f;
 }
 
-void Particle::checkborders(float radioAudio){
+void Particle::checkborders(float x,float y){
     
-    float border = radioAudio;
-    if (pos.x >radioAudio) {
+    float borderX = x;
+    float borderY = y;
+    
+    if (pos.x >x) {
         vel.x*=-1;
-        pos.x= border;
+        pos.x= 0;
         
     }else if (pos.x <0){
         vel.x *=-1;
         pos.x =0;
     }
     
-    if (pos.y >radioAudio) {
+    if (pos.y >y) {
         vel.y*=-1;
-        pos.y= border;
+        pos.y= 0;
         
     }else if (pos.y <0){
         vel.y *=-1;
         pos.y =0;
     }
     
-    if (pos.z >radioAudio) {
+    if (pos.z >20) {
         vel.z*=-1;
-        pos.z= border;
+        pos.z= 20;
         
     }else if (pos.z <0){
         vel.z *=-1;

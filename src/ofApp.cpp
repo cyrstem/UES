@@ -57,20 +57,13 @@ void ofApp::guiSetups(){
     prtctr.setPosition(800, 400);
     prtctr.add(numPtrs.set("size",10,5,100));
     
-    
-    
-    
-    
-
-    
-    
     //saving to video setup
     
     mRender.setup(ofGetWidth(),ofGetHeight());
     
     int numParticle =10;
     for(int i = 0; i<numParticle; i++){
-        auto m = ParticleRef(new Particle(5,ofRandom(-300,300),ofRandom(-400,400),ofRandom(-500,500)));
+        auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),ofRandom(fbo.getHeight()),ofRandom(300)));
         mParticle.push_back(m);
     }
 
@@ -95,16 +88,12 @@ void ofApp::update(){
 
     spectrumView();
     fbo.end();
-
-      cam.rotateDeg(camRotate,cam.getUpAxis());
- 
-
-
-    
+    //cam.rotateDeg(camRotate,cam.getAxis());
+    //cam.rollDeg(30);
     for(auto particle:mParticle){
         particle->update(level);
         //particle->applyForce(f);
-        particle->checkborders(radius);
+        particle->checkborders(0,0);
         
     }
 }
@@ -129,8 +118,8 @@ void ofApp::spectrumView(){
     ofSetColor(c);
     ofEnableSmoothing();
     ofNoFill();
-    ofTranslate(ofGetWindowWidth()/2,ofGetWindowHeight()/2);
-    ofPopMatrix();
+//    ofTranslate(ofGetWindowWidth()/2,ofGetWindowHeight()/2);
+//    ofPopMatrix();
     
     glm::vec3 ori;
   
@@ -143,18 +132,6 @@ void ofApp::spectrumView(){
     //if push matrix use always put camera after that  if is camera  by  mouse
     cam.begin();
   
-    //particle  se dibuja
-//    mAttractor->draw();
-//    for (auto particle:mParticle) {
-//        particle->pDraw();
-//    }
-    for (auto particle:mParticle) {
-        particle->draw();
-    }
-   
- 
-    
-
     ofBeginShape();
     
    // int resolution = 600;
@@ -174,12 +151,16 @@ void ofApp::spectrumView(){
     }
     
     ofEndShape(true);
-    ofPushMatrix();
-    ofPopMatrix();
+//    ofPushMatrix();
+//    ofPopMatrix();
+    for (auto particle:mParticle) {
+        particle->draw();
+    }
+
 
     cam.end();
 
-    ofPushMatrix();
+//    ofPushMatrix();
 }
 //--------------------------------------------------------------
 void ofApp::draw(){

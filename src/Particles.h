@@ -15,15 +15,16 @@ typedef std::shared_ptr<class Particle> ParticleRef;
 class Particle{
     public:
     Particle();
-    Particle(float s, float x, float y, float z);
+    Particle(float m, float x, float y, float z);
     void update(float dt);
     void draw();
     void applyForce(glm::vec3 force);
-    void checkborders( float radioAudio);
+    void checkborders( float x,float y);
     
     glm::vec3 pos;
     glm::vec3 vel;
     glm::vec3 acc;
+    float mMass;
 
     
     
