@@ -61,7 +61,7 @@ void ofApp::guiSetups(){
     
     mRender.setup(ofGetWidth(),ofGetHeight());
     
-    int numParticle =10;
+    int numParticle =30;
     for(int i = 0; i<numParticle; i++){
         auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),ofRandom(fbo.getHeight()),ofRandom(300)));
         mParticle.push_back(m);
@@ -91,9 +91,9 @@ void ofApp::update(){
     //cam.rotateDeg(camRotate,cam.getAxis());
     //cam.rollDeg(30);
     for(auto particle:mParticle){
-        particle->update(level);
+        particle->update(affect);
         //particle->applyForce(f);
-        particle->checkborders(0,0);
+        particle->checkborders(affect,600);
         
     }
 }
@@ -151,8 +151,7 @@ void ofApp::spectrumView(){
     }
     
     ofEndShape(true);
-//    ofPushMatrix();
-//    ofPopMatrix();
+
     for (auto particle:mParticle) {
         particle->draw();
     }

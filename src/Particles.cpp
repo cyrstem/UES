@@ -18,17 +18,17 @@ Particle::Particle()
  Particle::Particle(float m, float x, float y, float z)
 {
     mMass = m;
-    acc +=ofRandom(-7,1);
-    pos = glm::vec3(x,y,z);
+    acc += cos(ofRandom(40));
+    pos = glm::vec3(x+40,y+3,z+30);
     pos+=acc;
 }
 
 void Particle::update(float dt)
 {
-    vel +=acc+dt;
-    pos += 0;
-    acc *= 0;
-    
+   
+    pos += 0.1;
+    acc *= 0.01 +dt;
+     vel +=acc+dt;
 }
 
 void Particle::draw()
