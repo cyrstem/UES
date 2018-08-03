@@ -10,7 +10,7 @@
 Particle::Particle()
 {
     mMass =1.0f;
-    pos = glm::vec3(0,0,0);
+    pos = glm::vec3(40,0.5,50);
     vel=  glm::vec3(0,0,0);
     acc = glm::vec3(0,0,0);
 }
@@ -18,29 +18,30 @@ Particle::Particle()
  Particle::Particle(float m, float x, float y, float z)
 {
     mMass = m;
-    acc += cos(ofRandom(40));
-    pos = glm::vec3(x+40,y+3,z+30);
+    pos =glm::vec3(x+30,y,z);
+    acc += 0;
+
     pos+=acc;
 }
 
 void Particle::update(float dt)
 {
    
-    pos += 0.1;
-    acc *= 0.01 +dt;
-     vel +=acc+dt;
+    pos += 0.3 ;
+    acc *= 0;
+     //vel +=acc+dt;
 }
 
 void Particle::draw()
 {
-    //ofPushMatrix();
+
     ofDrawRectangle(0, 0, 700, 700);
     ofPushStyle();
     ofSetColor(255);
     ofFill();
     ofDrawSphere(pos, 10);
     ofPopStyle();
-    //ofPopMatrix();
+
     
 }
 

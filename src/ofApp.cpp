@@ -61,9 +61,9 @@ void ofApp::guiSetups(){
     
     mRender.setup(ofGetWidth(),ofGetHeight());
     
-    int numParticle =30;
+    int numParticle =5;
     for(int i = 0; i<numParticle; i++){
-        auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),ofRandom(fbo.getHeight()),ofRandom(300)));
+        auto m = ParticleRef(new Particle(5,34+3,4,-400));
         mParticle.push_back(m);
     }
 
@@ -127,7 +127,7 @@ void ofApp::spectrumView(){
     
     ori= glm::vec3(0,0,0);
     //ofEnableDepthTest();
-    cam.setTarget(ori);
+    //cam.setTarget(ori);
 
     //if push matrix use always put camera after that  if is camera  by  mouse
     cam.begin();
@@ -242,7 +242,16 @@ void ofApp::keyPressed(int key){
             imgpreview.grabScreen(30, 20, fbo.getWidth(), fbo.getHeight());
             imgpreview.save("preview/screenshot"+ofToString(ofRandom(0,1000),0)+".jpg",OF_IMAGE_QUALITY_HIGH);
             break;
+        case 'o':
+            int numParticle =5;
+            for(int i = 0; i<numParticle; i++){
+                auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),fbo.getHeight(),-400));
+                mParticle.push_back(m);
+            }
+
+            break;
     }
+    
 }
 
 //--------------------------------------------------------------
