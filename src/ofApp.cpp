@@ -63,7 +63,7 @@ void ofApp::guiSetups(){
     
     int numParticle =5;
     for(int i = 0; i<numParticle; i++){
-        auto m = ParticleRef(new Particle(5,34+3,4,-400));
+        auto m = ParticleRef(new Particle(5,0,0,0));
         mParticle.push_back(m);
     }
 
@@ -93,7 +93,7 @@ void ofApp::update(){
     for(auto particle:mParticle){
         particle->update(affect);
         //particle->applyForce(f);
-        particle->checkborders(affect,600);
+        //particle->checkborders(affect,600);
         
     }
 }
@@ -118,17 +118,11 @@ void ofApp::spectrumView(){
     ofSetColor(c);
     ofEnableSmoothing();
     ofNoFill();
-//    ofTranslate(ofGetWindowWidth()/2,ofGetWindowHeight()/2);
-//    ofPopMatrix();
-    
     glm::vec3 ori;
   
     
     
     ori= glm::vec3(0,0,0);
-    //ofEnableDepthTest();
-    //cam.setTarget(ori);
-
     //if push matrix use always put camera after that  if is camera  by  mouse
     cam.begin();
   

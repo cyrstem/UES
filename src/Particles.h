@@ -24,8 +24,12 @@ class Particle{
     glm::vec3 pos;
     glm::vec3 vel;
     glm::vec3 acc;
+    
+ 
     float mMass;
-
+    glm::vec3 ori;
+    glm::vec3 angularVel;
+    glm::vec3 angularAcc;
     
     
 };
