@@ -61,11 +61,11 @@ void ofApp::guiSetups(){
     
     mRender.setup(ofGetWidth(),ofGetHeight());
     
-    int numParticle =5;
-    for(int i = 0; i<numParticle; i++){
-        auto m = ParticleRef(new Particle(5,0,0,0));
-        mParticle.push_back(m);
-    }
+//    int numParticle =5;
+//    for(int i = 0; i<numParticle; i++){
+//        auto m = ParticleRef(new Particle(5,0,0,0));
+//        mParticle.push_back(m);
+//    }
 
 
 }
@@ -88,14 +88,25 @@ void ofApp::update(){
 
     spectrumView();
     fbo.end();
-    //cam.rotateDeg(camRotate,cam.getAxis());
-    //cam.rollDeg(30);
+
     for(auto particle:mParticle){
         particle->update(affect);
         //particle->applyForce(f);
-        //particle->checkborders(affect,600);
+    //particle->checkborders(affect,600);
         
     }
+    
+    //this part should  valanciar cuadno se crean  las particulas
+    //------------tod aqui
+    
+//    int numParticle =5;
+//    if(affect!= 200){
+//        for(int i = 0; i<numParticle; i++){
+//            auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),fbo.getHeight(),-400));
+//            mParticle.push_back(m);
+//        }
+//    }
+
 }
 
 //--------------------------------------------------------------
@@ -144,11 +155,13 @@ void ofApp::spectrumView(){
         circle.addVertex(x + 200, y);
     }
     
+    
     ofEndShape(true);
 
     for (auto particle:mParticle) {
         particle->draw();
     }
+    
 
 
     cam.end();
