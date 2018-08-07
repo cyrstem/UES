@@ -26,6 +26,7 @@ class ofApp : public ofBaseApp{
     string songName;
     bool showData;
     bool recordData;
+    ofLight light;
 
 
     float affect;

@@ -15,14 +15,16 @@ void ofApp::setup(){
     s.width = 700;
     s.height = 700;
     s.useDepth =true;
+    s.depthStencilAsTexture = true;
     s.internalformat = GL_RGBA32F_ARB;
     fbo.allocate(s);
-    
-    
+    //esto no hace nada
+    //ofDisableArbTex();
     fbo.begin();
     ofClear(255, 255, 255,0);
     fbo.end();
     guiSetups();
+    
 }
 void ofApp::guiSetups(){
     
@@ -72,6 +74,7 @@ void ofApp::guiSetups(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    light.setPosition(ofGetWindowWidth()/2, ofGetWindowHeight()/2, 300);
     ofSoundUpdate();
     float *spectrum = ofSoundGetSpectrum(128);
     double level = 0;
@@ -88,10 +91,10 @@ void ofApp::update(){
 
     spectrumView();
     fbo.end();
-
+    glm::vec3 g = glm::vec3(0,0.7,0);
     for(auto particle:mParticle){
         particle->update(affect);
-        //particle->applyForce(f);
+        particle->applyForce(g);
     //particle->checkborders(affect,600);
         
     }
@@ -106,13 +109,25 @@ void ofApp::update(){
 //            mParticle.push_back(m);
 //        }
 //    }
-
+    //float time = ofGetElapsedTimef();
+    int numParticle = 6;
+    if (ofGetFrameNum() % 160 < affect) {
+        for(int i = 0; i<numParticle; i++){
+                        auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),fbo.getHeight(),-400));
+                        mParticle.push_back(m);
+                    }
+    }
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::spectrumView(){
     ofEnableAlphaBlending();
     ofEnableAntiAliasing();
+    //ofEnableDepthTest();
+    ofEnableLighting();
+    light.enable();
+    //light.
     //fadeAmnt =15;
     if (reset) {
         cam.reset();
@@ -136,12 +151,8 @@ void ofApp::spectrumView(){
     ori= glm::vec3(0,0,0);
     //if push matrix use always put camera after that  if is camera  by  mouse
     cam.begin();
-  
+    //light.enable();
     ofBeginShape();
-    
-   // int resolution = 600;
-
-//    radius = 100;
     float noiseHeight = 0.0 + affect;
     ofSetPolyMode(OF_POLY_WINDING_NONZERO);
     for (int i = 0; i < resolution; i++) {
@@ -162,11 +173,11 @@ void ofApp::spectrumView(){
         particle->draw();
     }
     
-
-
+    
+    light.disable();
     cam.end();
-
-//    ofPushMatrix();
+    ofDisableLighting();
+   // ofDisableDepthTest();
 }
 //--------------------------------------------------------------
 void ofApp::draw(){

@@ -38,7 +38,8 @@ void Particle::update(float dt)
 
 void Particle::draw()
 {
-    ofDrawRectangle(0, 0, 700, 700);
+    ofDrawBox(0, 0, 100, 700, 700, 700);
+    //ofDrawRectangle(0, 0, 700, 700);
     ofPushStyle();
     ofSetColor(255);
     ofFill();
