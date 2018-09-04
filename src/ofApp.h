@@ -18,7 +18,7 @@ class ofApp : public ofBaseApp{
         void exit();
 		void dragEvent(ofDragInfo dragInfo);
     
-    
+    ofShader shader;
     ofFbo fbo;
     ofEasyCam cam;
     //audio  staff  new try

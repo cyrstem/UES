@@ -25,6 +25,20 @@ void ofApp::setup(){
     fbo.end();
     guiSetups();
     
+    
+    
+#ifdef TARGET_OPENGLES
+    shader.load("shaders_gles/noise.vert","shaders_gles/noise.frag");
+#else
+    if(ofIsGLProgrammableRenderer()){
+        shader.load("shaders_gl3/noise.vert", "shaders_gl3/noise.frag");
+    }else{
+        shader.load("shaders/noise.vert", "shaders/noise.frag");
+    }
+#endif
+    
+
+    
 }
 void ofApp::guiSetups(){
     
@@ -95,9 +109,24 @@ void ofApp::update(){
     for(auto particle:mParticle){
         particle->update(affect);
         particle->applyForce(g);
-    //particle->checkborders(affect,600);
-        
+        if (particle->age ==100) {
+            cout<<"should be dead"<<endl;
+        }
+//        particle->checkborders(0,0);
     }
+    
+    
+    
+//    for (auto movp :p){
+//        movp->update();
+//        if(movp->age==100){
+//            cout<<p.size()<<endl;
+//            movp.reset();
+//            p.clear();
+//        }
+//        
+//    }
+
     
     //this part should  valanciar cuadno se crean  las particulas
     //------------tod aqui
@@ -110,13 +139,14 @@ void ofApp::update(){
 //        }
 //    }
     //float time = ofGetElapsedTimef();
-    int numParticle = 6;
-    if (ofGetFrameNum() % 160 < affect) {
-        for(int i = 0; i<numParticle; i++){
-                        auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),fbo.getHeight(),-400));
-                        mParticle.push_back(m);
-                    }
-    }
+//    int numParticle = 6;
+//    if (ofGetFrameNum() % 160 < affect) {
+//        for(int i = 0; i<numParticle; i++){
+//                        auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),fbo.getHeight(),-400));
+//                        mParticle.push_back(m);
+//                    }
+//    }
+
     
 }
 
@@ -170,7 +200,17 @@ void ofApp::spectrumView(){
     ofEndShape(true);
 
     for (auto particle:mParticle) {
+        shader.begin();
+        //we want to pass in some varrying values to animate our type / color
+        shader.setUniform1f("timeValX", ofGetElapsedTimef() * 0.1 );
+        shader.setUniform1f("timeValY", -ofGetElapsedTimef() * 0.18 );
+        
+        //we also pass in the mouse position
+        //we have to transform the coords to what the shader is expecting which is 0,0 in the center and y axis flipped.
+        shader.setUniform2f("mouse", mouseX - ofGetWidth()/2, ofGetHeight()/2-mouseY );
         particle->draw();
+        shader.end();
+        
     }
     
     

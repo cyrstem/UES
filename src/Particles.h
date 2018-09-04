@@ -16,6 +16,7 @@ class Particle{
     public:
     Particle();
     Particle(float m, float x, float y, float z);
+    
     void update(float dt);
     void draw();
     void applyForce(glm::vec3 force);
@@ -30,7 +31,8 @@ class Particle{
     glm::vec3 ori;
     glm::vec3 angularVel;
     glm::vec3 angularAcc;
-    
+    bool live;
+    float age;
     
 };
 #endif /* defined(__UES__Particles__) */

@@ -13,6 +13,7 @@ Particle::Particle()
     pos = glm::vec3(0,0,0);
     vel=  glm::vec3(0,0,0);
     acc = glm::vec3(0,0,0);
+    live =false;
 }
 
  Particle::Particle(float m, float x, float y, float z)
@@ -23,6 +24,7 @@ Particle::Particle()
     pos.z = ofRandom(-200,200);
     vel.x = ofRandom(-0.3,0.3);
     vel.y = ofRandom(-1, 1);
+    live = true;
     
 
 }
@@ -33,7 +35,13 @@ void Particle::update(float dt)
 //    pos += 0.3 ;
     //acc *= 0;
      //vel +=acc+dt;
+    
     pos = pos + vel;
+    
+    if(!live){
+        age++;
+    }
+
 }
 
 void Particle::draw()
@@ -41,7 +49,7 @@ void Particle::draw()
     ofDrawBox(0, 0, 100, 700, 700, 700);
     //ofDrawRectangle(0, 0, 700, 700);
     ofPushStyle();
-    ofSetColor(255);
+    ofSetColor(ofColor::red);
     ofFill();
     ofDrawSphere(pos, 10);
     ofPopStyle();
