@@ -15,12 +15,12 @@ typedef std::shared_ptr<class Particle> ParticleRef;
 class Particle{
     public:
     Particle();
-    Particle(float m, float x, float y, float z);
+    Particle(float m, float x, float y, float z ,ofColor _color);
     
     void update(float dt);
     void draw();
     void applyForce(glm::vec3 force);
-    void checkborders( float x,float y);
+    void timetoDie();
     
     glm::vec3 pos;
     glm::vec3 vel;
@@ -31,8 +31,8 @@ class Particle{
     glm::vec3 ori;
     glm::vec3 angularVel;
     glm::vec3 angularAcc;
-    bool live;
-    float age;
+    ofColor color;
+
     
 };
 #endif /* defined(__UES__Particles__) */

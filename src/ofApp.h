@@ -45,8 +45,10 @@ class ofApp : public ofBaseApp{
     ofParameter<float>camRotate;
     
     ofxToggle fullScreen;
+    ofxToggle shaderOn;
     ofxLabel t;
     ofxButton reset;
+    
     ofxToggle record;
     ofTrueTypeFont basic;
     

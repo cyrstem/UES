@@ -13,10 +13,10 @@ Particle::Particle()
     pos = glm::vec3(0,0,0);
     vel=  glm::vec3(0,0,0);
     acc = glm::vec3(0,0,0);
-    live =false;
+
 }
 
- Particle::Particle(float m, float x, float y, float z)
+ Particle::Particle(float m, float x, float y, float z,ofColor _color)
 {
     mMass = m;
     pos.x = ofRandom(-100,100);
@@ -24,75 +24,39 @@ Particle::Particle()
     pos.z = ofRandom(-200,200);
     vel.x = ofRandom(-0.3,0.3);
     vel.y = ofRandom(-1, 1);
-    live = true;
-    
+
+    color =_color;
 
 }
 
 void Particle::update(float dt)
 {
    
-//    pos += 0.3 ;
-    //acc *= 0;
-     //vel +=acc+dt;
-    
     pos = pos + vel;
+
     
-    if(!live){
-        age++;
-    }
 
 }
 
 void Particle::draw()
 {
+
     ofDrawBox(0, 0, 100, 700, 700, 700);
-    //ofDrawRectangle(0, 0, 700, 700);
     ofPushStyle();
-    ofSetColor(ofColor::red);
+    ofSetColor(color);
     ofFill();
     ofDrawSphere(pos, 10);
     ofPopStyle();
 
     
 }
-
 void Particle::applyForce( glm::vec3 force){
     glm::vec3 f = force;
     acc +=f;
+
+
 }
 
-void Particle::checkborders(float x,float y){
-    
-    float borderX = x;
-    float borderY = y;
-    
-    if (pos.x >x) {
-        vel.x*=-1;
-        pos.x= 0;
-        
-    }else if (pos.x <0){
-        vel.x *=-1;
-        pos.x =0;
-    }
-    
-    if (pos.y >y) {
-        vel.y*=-1;
-        pos.y= 0;
-        
-    }else if (pos.y <0){
-        vel.y *=-1;
-        pos.y =0;
-    }
-    
-    if (pos.z >20) {
-        vel.z*=-1;
-        pos.z= 20;
-        
-    }else if (pos.z <0){
-        vel.z *=-1;
-        pos.z =-1;
-    }
-
+void Particle::timetoDie(){
 
 }

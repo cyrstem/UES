@@ -60,6 +60,7 @@ void ofApp::guiSetups(){
     audctr.add(radius.set("Radio",100,10,300));
     audctr.add(resolution.set("C- Resolution",100,3,150));
     audctr.add(fadeAmnt.set("Fade V",15,5,45));
+    audctr.add(shaderOn.setup("Shader Effect",false));
     //color  for audio  Wave controls
     //GUI CONTROLES COLOREs
     colores.loadFromFile("colorsSettings.xml");
@@ -102,51 +103,19 @@ void ofApp::update(){
     ofEnableAlphaBlending();
     
     fbo.begin();
-
     spectrumView();
     fbo.end();
-    glm::vec3 g = glm::vec3(0,0.7,0);
+    
+    
+    
+    glm::vec3 g = glm::vec3(0,0.8,0);
     for(auto particle:mParticle){
         particle->update(affect);
         particle->applyForce(g);
-        if (particle->age ==100) {
-            cout<<"should be dead"<<endl;
-        }
-//        particle->checkborders(0,0);
+       
+        
     }
-    
-    
-    
-//    for (auto movp :p){
-//        movp->update();
-//        if(movp->age==100){
-//            cout<<p.size()<<endl;
-//            movp.reset();
-//            p.clear();
-//        }
-//        
-//    }
-
-    
-    //this part should  valanciar cuadno se crean  las particulas
-    //------------tod aqui
-    
-//    int numParticle =5;
-//    if(affect!= 200){
-//        for(int i = 0; i<numParticle; i++){
-//            auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),fbo.getHeight(),-400));
-//            mParticle.push_back(m);
-//        }
-//    }
-    //float time = ofGetElapsedTimef();
-//    int numParticle = 6;
-//    if (ofGetFrameNum() % 160 < affect) {
-//        for(int i = 0; i<numParticle; i++){
-//                        auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),fbo.getHeight(),-400));
-//                        mParticle.push_back(m);
-//                    }
-//    }
-
+      cout<<"this is "<<mParticle.size()<<endl;
     
 }
 
@@ -200,16 +169,24 @@ void ofApp::spectrumView(){
     ofEndShape(true);
 
     for (auto particle:mParticle) {
-        shader.begin();
-        //we want to pass in some varrying values to animate our type / color
-        shader.setUniform1f("timeValX", ofGetElapsedTimef() * 0.1 );
-        shader.setUniform1f("timeValY", -ofGetElapsedTimef() * 0.18 );
-        
-        //we also pass in the mouse position
-        //we have to transform the coords to what the shader is expecting which is 0,0 in the center and y axis flipped.
-        shader.setUniform2f("mouse", mouseX - ofGetWidth()/2, ofGetHeight()/2-mouseY );
-        particle->draw();
-        shader.end();
+        if (shaderOn ==true) {
+              shader.begin();
+            //we want to pass in some varrying values to animate our type / color
+            shader.setUniform1f("timeValX", ofGetElapsedTimef() * 0.1 );
+            shader.setUniform1f("timeValY", -ofGetElapsedTimef() * 0.18 );
+            
+            //we also pass in the mouse position
+            //we have to transform the coords to what the shader is expecting which is 0,0 in the center and y axis flipped.
+            shader.setUniform2f("mouse", mouseX - ofGetWidth()/2, ofGetHeight()/2-mouseY );
+            particle->draw();
+            shader.end();
+
+        }else {
+            particle->draw();
+          
+
+        }
+      
         
     }
     
@@ -303,7 +280,7 @@ void ofApp::keyPressed(int key){
         case 'o':
             int numParticle =5;
             for(int i = 0; i<numParticle; i++){
-                auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),fbo.getHeight(),-400));
+                auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),fbo.getHeight(),-400,c));
                 mParticle.push_back(m);
             }
 
