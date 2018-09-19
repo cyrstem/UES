@@ -18,8 +18,7 @@ void ofApp::setup(){
     s.depthStencilAsTexture = true;
     s.internalformat = GL_RGBA32F_ARB;
     fbo.allocate(s);
-    //esto no hace nada
-    //ofDisableArbTex();
+
     fbo.begin();
     ofClear(255, 255, 255,0);
     fbo.end();
