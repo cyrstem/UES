@@ -9,7 +9,6 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     basic.load("Hack-Regular.ttf", 12,true);
     
-    
     //fbo
     ofFbo::Settings s;
     s.width = 700;
@@ -24,8 +23,7 @@ void ofApp::setup(){
     fbo.end();
     guiSetups();
     
-    
-    
+    light.setParent(cam);
 #ifdef TARGET_OPENGLES
     shader.load("shaders_gles/noise.vert","shaders_gles/noise.frag");
 #else
@@ -88,7 +86,10 @@ void ofApp::guiSetups(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    light.setPosition(ofGetWindowWidth()/2, ofGetWindowHeight()/2, 300);
+    
+    
+   
+    light.orbitRad(50, 50, 50);
     ofSoundUpdate();
     float *spectrum = ofSoundGetSpectrum(128);
     double level = 0;
@@ -98,7 +99,7 @@ void ofApp::update(){
     level =sqrt(level/128);
     //this is key
     affect =ofMap(level, 0, 1, 0.3, 200);
-    
+
     ofEnableAlphaBlending();
     
     fbo.begin();
@@ -114,7 +115,7 @@ void ofApp::update(){
        
         
     }
-      cout<<"this is "<<mParticle.size()<<endl;
+      //cout<<"this is "<<mParticle.size()<<endl;
     
 }
 
@@ -125,8 +126,6 @@ void ofApp::spectrumView(){
     //ofEnableDepthTest();
     ofEnableLighting();
     light.enable();
-    //light.
-    //fadeAmnt =15;
     if (reset) {
         cam.reset();
     }
@@ -164,8 +163,34 @@ void ofApp::spectrumView(){
         circle.addVertex(x + 200, y);
     }
     
+
     
+        cout<<noiseHeight<<endl;
     ofEndShape(true);
+    
+    
+    if(noiseHeight>50.0 ){
+        int numParticle =1;
+        for(int i = 0; i<numParticle; i++){
+            auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),fbo.getHeight(),-400,c));
+            mParticle.push_back(m);
+    
+            if (mParticle.size()==200) {
+                m.reset();
+                mParticle.clear();
+               
+            }
+
+            
+        }
+        
+        
+        
+    }
+
+    
+    
+    
 
     for (auto particle:mParticle) {
         if (shaderOn ==true) {

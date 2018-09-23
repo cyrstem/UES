@@ -32,6 +32,8 @@ class Particle{
     glm::vec3 angularVel;
     glm::vec3 angularAcc;
     ofColor color;
+    
+    vector<glm::vec3>history;
 
     
 };

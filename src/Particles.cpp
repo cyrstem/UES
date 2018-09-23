@@ -33,6 +33,10 @@ void Particle::update(float dt)
 {
    
     pos = pos + vel;
+    history.push_back(pos);
+    if (history.size() > 50) {
+        history.erase(history.begin()+4);
+    }
 
     
 
@@ -43,6 +47,18 @@ void Particle::draw()
 
     ofDrawBox(0, 0, 100, 700, 700, 700);
     ofPushStyle();
+    
+    for (int i=0; i < history.size(); i=i+10) {
+        //ofPushMatrix();
+        ofPushStyle();
+        ofSetLineWidth(0.01);
+        ofSetColor(255,255,255);
+
+        ofRotateRad(360, pos.x, pos.y, pos.z);
+        ofDrawCircle(pos.x, pos.y,pos.z,5+i);
+        ofPopStyle();
+        //ofPopMatrix();
+    }
     ofSetColor(color);
     ofFill();
     ofDrawSphere(pos, 10);
