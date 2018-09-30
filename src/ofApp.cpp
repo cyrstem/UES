@@ -45,7 +45,7 @@ void ofApp::guiSetups(){
     //Wave Controls
     audctr.loadFromFile("WaveControlsSet.xml");
     audctr.setup("Wave Ctrls");
-    audctr.setPosition(800,100);
+    audctr.setPosition(800,150);
     audctr.add(lineaSize.set("Tmno Linea",1.3,0.1,10.5));
     audctr.add(radius.set("Radio",100,10,300));
     audctr.add(resolution.set("C- Resolution",100,3,150));
@@ -279,11 +279,16 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
         ofLogNotice("song loaded");
         songs.assign(dragInfo.files.size(), ofSoundPlayer());
         for ( unsigned int k =0 ; k<dragInfo.files.size(); k++) {
-            songName = ofToString(dragInfo.files[k]);
+            
+            
             songs[k].load(dragInfo.files[k]);
+             ofFile files (dragInfo.files[k]);
+            //;
+            songName = ofToString(files.getFileName());
         }
     }
-
+ 
+    
 
 }
 
