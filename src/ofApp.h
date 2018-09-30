@@ -36,7 +36,7 @@ class ofApp : public ofBaseApp{
     ofxPanel ui;
     ofxPanel audctr;
     ofxPanel prtctr;
-    ofxPanel colores;
+//    ofxPanel colores;
     
     ofParameter<float>lineaSize;
     ofParameter<float>radius;

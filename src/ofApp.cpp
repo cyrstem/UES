@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofBackground(5);
+    ofBackground(2);
     ofSetWindowShape(1200, 800);
     ofSetWindowTitle("UES -v0.1");
     ofSetFrameRate(60);
@@ -24,15 +24,7 @@ void ofApp::setup(){
     guiSetups();
     
     light.setParent(cam);
-#ifdef TARGET_OPENGLES
-    shader.load("shaders_gles/noise.vert","shaders_gles/noise.frag");
-#else
-    if(ofIsGLProgrammableRenderer()){
-        shader.load("shaders_gl3/noise.vert", "shaders_gl3/noise.frag");
-    }else{
-        shader.load("shaders/noise.vert", "shaders/noise.frag");
-    }
-#endif
+    shader.load("shaders/noise.vert", "shaders/noise.frag");
     
 
     
@@ -49,27 +41,30 @@ void ofApp::guiSetups(){
     ui.add(reset.setup("Reset"));
     ui.add(record.setup("Capture Screen ",false));
     
-    //audio Visualisation  Controlsss
+    //Wave Controls
+    audctr.loadFromFile("WaveControlsSet.xml");
     audctr.setup("Wave Ctrls");
-    audctr.loadFromFile("audioWSettings.xml");
-    audctr.setPosition(800,200);
+    audctr.setPosition(800,100);
     audctr.add(lineaSize.set("Tmno Linea",1.3,0.1,10.5));
     audctr.add(radius.set("Radio",100,10,300));
     audctr.add(resolution.set("C- Resolution",100,3,150));
     audctr.add(fadeAmnt.set("Fade V",15,5,45));
     audctr.add(shaderOn.setup("Shader Effect",false));
+    audctr.add(c.set("RGBA -Waves-controls",ofColor(255),ofColor(255),ofColor(255)));
     //color  for audio  Wave controls
+    
     //GUI CONTROLES COLOREs
-    colores.loadFromFile("colorsSettings.xml");
-    colores.setup("Colores");
-    colores.setPosition(800,500);
-    c.set("RGB -A?",ofColor(255),ofColor(255,1),ofColor(255));
-    colores.add(c);
+   
+//    colores.setup("Colores");
+//    colores.loadFromFile("colorsSettings.xml");
+//    colores.setPosition(800,500);
+//    c.set("RGB -A?",ofColor(255),ofColor(255,1),ofColor(255));
+//    colores.add(c);
     
     //gui Particles
-    prtctr.setup("Particle Ctrls");
-    prtctr.setPosition(800, 400);
-    prtctr.add(numPtrs.set("size",10,5,100));
+//    prtctr.setup("Particle Ctrls");
+//    prtctr.setPosition(800, 400);
+//    prtctr.add(numPtrs.set("size",10,5,100));
     
     //saving to video setup
     
@@ -197,11 +192,11 @@ void ofApp::spectrumView(){
               shader.begin();
             //we want to pass in some varrying values to animate our type / color
             shader.setUniform1f("timeValX", ofGetElapsedTimef() * 0.1 );
-            shader.setUniform1f("timeValY", -ofGetElapsedTimef() * 0.18 );
+            shader.setUniform1f("timeValY", -ofGetElapsedTimef() * 0.4 );
             
             //we also pass in the mouse position
             //we have to transform the coords to what the shader is expecting which is 0,0 in the center and y axis flipped.
-            shader.setUniform2f("mouse", mouseX - ofGetWidth()/2, ofGetHeight()/2-mouseY );
+            shader.setUniform2f("mouse", noiseHeight - ofGetWidth()/2, ofGetHeight()/2-affect);
             particle->draw();
             shader.end();
 
@@ -222,7 +217,7 @@ void ofApp::spectrumView(){
 }
 //--------------------------------------------------------------
 void ofApp::draw(){
-    mRender.begin();
+    //mRender.begin();
     fbo.draw(30,20);
     if(showData ==false){
         basic.drawString("Drop the song here!!", 10, 780);
@@ -239,12 +234,12 @@ void ofApp::draw(){
     ofPopStyle();
     //GuiS DRAwn
     ui.draw();
-    colores.draw();
+//    colores.draw();
     audctr.draw();
-    prtctr.draw();
+   // prtctr.draw();
     //end guis
     //recoreded end//
-    mRender.end();
+    //mRender.end();
     
     //esta parte toca verificar
      //algo esta raro con el 
@@ -316,6 +311,6 @@ void ofApp::keyPressed(int key){
 //--------------------------------------------------------------
 void ofApp::exit(){
     ui.saveToFile("settings.xml");
-    colores.saveToFile("colorsSettings.xml");
+    audctr.saveToFile("WaveControlsSet.xml");
 }
 
