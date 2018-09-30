@@ -48,6 +48,7 @@ class ofApp : public ofBaseApp{
     ofxToggle shaderOn;
     ofxLabel t;
     ofxButton reset;
+    ofxButton resetAll;
     
     ofxToggle record;
     ofTrueTypeFont basic;

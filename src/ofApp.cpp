@@ -38,8 +38,9 @@ void ofApp::guiSetups(){
     ui.setPosition(800,0);
     ui.add(fullScreen.setup("FullScreen on/off",false));
     ui.add(camRotate.set("Cam rotate Y",0,10,360));
-    ui.add(reset.setup("Reset"));
+    ui.add(reset.setup("Reset Cam"));
     ui.add(record.setup("Capture Screen ",false));
+    ui.add(resetAll.setup("RESET ALL TODITO"));
     
     //Wave Controls
     audctr.loadFromFile("WaveControlsSet.xml");
@@ -48,7 +49,7 @@ void ofApp::guiSetups(){
     audctr.add(lineaSize.set("Tmno Linea",1.3,0.1,10.5));
     audctr.add(radius.set("Radio",100,10,300));
     audctr.add(resolution.set("C- Resolution",100,3,150));
-    audctr.add(fadeAmnt.set("Fade V",15,5,45));
+    audctr.add(fadeAmnt.set("Fade V",15,5,55));
     audctr.add(shaderOn.setup("Shader Effect",false));
     audctr.add(c.set("RGBA -Waves-controls",ofColor(255),ofColor(255),ofColor(255)));
     //color  for audio  Wave controls
@@ -103,7 +104,7 @@ void ofApp::update(){
     
     
     
-    glm::vec3 g = glm::vec3(0,0.8,0);
+    glm::vec3 g = glm::vec3(0.1,0.10,0);
     for(auto particle:mParticle){
         particle->update(affect);
         particle->applyForce(g);
@@ -124,7 +125,7 @@ void ofApp::spectrumView(){
     if (reset) {
         cam.reset();
     }
- 
+    
     
     ofFill();
     ofSetColor(255,255,255, fadeAmnt);
@@ -159,22 +160,33 @@ void ofApp::spectrumView(){
     }
     
 
-    
-        cout<<noiseHeight<<endl;
+          //calidad del noise height define el numero de planetas q nace
+        //cout<<noiseHeight<<endl;
     ofEndShape(true);
+    float pmaker = ofMap(noiseHeight, 0.0, 50.0, 0.0, 10.0);
+    //this hace q las particulas nascan de forma regular con la musica
+     //convirtiendo el valor de noise 0.0 float to  int
+    int test = int(pmaker);
     
-    
-    if(noiseHeight>50.0 ){
-        int numParticle =1;
+    if(noiseHeight>50 ){
+        int numParticle =pmaker;
         for(int i = 0; i<numParticle; i++){
             auto m = ParticleRef(new Particle(5,ofRandom(fbo.getWidth()),fbo.getHeight(),-400,c));
             mParticle.push_back(m);
     
-            if (mParticle.size()==200) {
+            if (mParticle.size()==50) {
                 m.reset();
-                mParticle.clear();
+                mParticle.erase(mParticle.begin(),mParticle.begin()+45);
+                cout<<"yap Borre 45"<<endl;
                
             }
+            
+            ///clear TODO cn el boto reset all
+//            if (!resetAll) {
+//                m.reset();
+//                mParticle.clear();
+//            }
+
 
             
         }
@@ -183,7 +195,6 @@ void ofApp::spectrumView(){
         
     }
 
-    
     
     
 
