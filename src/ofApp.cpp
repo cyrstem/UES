@@ -24,6 +24,7 @@ void ofApp::setup(){
     guiSetups();
     
     light.setParent(cam);
+    light.dolly(39);
     shader.load("shaders/noise.vert", "shaders/noise.frag");
     
 
@@ -49,23 +50,18 @@ void ofApp::guiSetups(){
     audctr.add(lineaSize.set("Tmno Linea",1.3,0.1,10.5));
     audctr.add(radius.set("Radio",100,10,300));
     audctr.add(resolution.set("C- Resolution",100,3,150));
-    audctr.add(fadeAmnt.set("Fade V",15,5,55));
+    audctr.add(fadeAmnt.set("Fade V",15,5,170));
+    audctr.add(luzX.set("Luz X",0,-2000,2000));
+    audctr.add(luzY.set("Luz Y",0,-2000,2000));
+    audctr.add(luzZ.set("Luz Z",0,-2000,2000));
     audctr.add(shaderOn.setup("Shader Effect",false));
+    audctr.add(fillWave.setup("Wave FIll OFF ",true));
     audctr.add(c.set("RGBA -Waves-controls",ofColor(255),ofColor(255),ofColor(255)));
-    //color  for audio  Wave controls
+    //GUI Particles
+    prtctr.setup("Particle Ctrls");
+    prtctr.setPosition(1010, 0);
+    prtctr.add(numPtrs.set("size",10,50,100));
     
-    //GUI CONTROLES COLOREs
-   
-//    colores.setup("Colores");
-//    colores.loadFromFile("colorsSettings.xml");
-//    colores.setPosition(800,500);
-//    c.set("RGB -A?",ofColor(255),ofColor(255,1),ofColor(255));
-//    colores.add(c);
-    
-    //gui Particles
-//    prtctr.setup("Particle Ctrls");
-//    prtctr.setPosition(800, 400);
-//    prtctr.add(numPtrs.set("size",10,5,100));
     
     //saving to video setup
     
@@ -118,10 +114,11 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::spectrumView(){
     ofEnableAlphaBlending();
-    ofEnableAntiAliasing();
+    
     //ofEnableDepthTest();
     ofEnableLighting();
     light.enable();
+    light.setPosition(luzX, luzY, luzZ);
     if (reset) {
         cam.reset();
     }
@@ -136,6 +133,7 @@ void ofApp::spectrumView(){
     ofSetLineWidth(lineaSize);
     ofSetColor(c);
     ofEnableSmoothing();
+    
     ofNoFill();
     glm::vec3 ori;
   
@@ -145,7 +143,14 @@ void ofApp::spectrumView(){
     //if push matrix use always put camera after that  if is camera  by  mouse
     cam.begin();
     //light.enable();
+    ofPushStyle();
+    if (!fillWave) {
+        ofFill();
+    }else{
+        ofNoFill();
+    }
     ofBeginShape();
+    
     float noiseHeight = 0.0 + affect;
     ofSetPolyMode(OF_POLY_WINDING_NONZERO);
     for (int i = 0; i < resolution; i++) {
@@ -163,6 +168,7 @@ void ofApp::spectrumView(){
           //calidad del noise height define el numero de planetas q nace
         //cout<<noiseHeight<<endl;
     ofEndShape(true);
+    ofPopStyle();
     float pmaker = ofMap(noiseHeight, 0.0, 50.0, 0.0, 10.0);
     //this hace q las particulas nascan de forma regular con la musica
      //convirtiendo el valor de noise 0.0 float to  int
@@ -182,10 +188,10 @@ void ofApp::spectrumView(){
             }
             
             ///clear TODO cn el boto reset all
-//            if (!resetAll) {
-//                m.reset();
-//                mParticle.clear();
-//            }
+            if (resetAll== true) {
+                m.reset();
+                mParticle.clear();
+            }
 
 
             
@@ -228,18 +234,21 @@ void ofApp::spectrumView(){
 }
 //--------------------------------------------------------------
 void ofApp::draw(){
+    ofEnableAntiAliasing();
     //mRender.begin();
     fbo.draw(30,20);
     if(showData ==false){
+
         basic.drawString("Drop the song here!!", 10, 780);
     } else{
         basic.drawString("Playing ..."+songName, 10, 780);
     }
-    
+
     //guide  drop song  draw
     ofPushStyle();
     ofSetColor(ofColor::white,255);
     ofNoFill();
+
     ofSetLineWidth(1);
     ofDrawRectangle(5, 740,basic.stringWidth(songName)+210, 50);
     ofPopStyle();
@@ -247,7 +256,7 @@ void ofApp::draw(){
     ui.draw();
 //    colores.draw();
     audctr.draw();
-   // prtctr.draw();
+    prtctr.draw();
     //end guis
     //recoreded end//
     //mRender.end();
@@ -283,7 +292,6 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
             
             songs[k].load(dragInfo.files[k]);
              ofFile files (dragInfo.files[k]);
-            //;
             songName = ofToString(files.getFileName());
         }
     }

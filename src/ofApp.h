@@ -36,16 +36,22 @@ class ofApp : public ofBaseApp{
     ofxPanel ui;
     ofxPanel audctr;
     ofxPanel prtctr;
-//    ofxPanel colores;
+
     
     ofParameter<float>lineaSize;
     ofParameter<float>radius;
     ofParameter<int>resolution;
     ofParameter<float>fadeAmnt;
     ofParameter<float>camRotate;
+    ofParameter<float>luzX;
+    ofParameter<float>luzY;
+    ofParameter<float>luzZ;
+    //ofParameter<glm::vec3>luzPos;
+    
     
     ofxToggle fullScreen;
     ofxToggle shaderOn;
+    ofxToggle fillWave;
     ofxLabel t;
     ofxButton reset;
     ofxButton resetAll;
@@ -57,8 +63,11 @@ class ofApp : public ofBaseApp{
     
   
     ofParameter<ofColor>c;
-    
+    //audio
     ofParameter<int>numPtrs;
+    
+    
+    
     //saving to video
     ofxSimpleScreenRecorder mRender;
 

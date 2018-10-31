@@ -45,7 +45,7 @@ void Particle::update(float dt)
 void Particle::draw()
 {
 
-     ofDrawBox(0, 0, 100, 700, 700, 700);
+     //ofDrawBox(0, 0, 100, 700, 700, 700);
     ofPushStyle();
     
     for (int i=0; i < history.size(); i=i+10) {
@@ -61,7 +61,7 @@ void Particle::draw()
     }
     ofSetColor(color);
     ofFill();
-    ofDrawSphere(pos, 9);
+    ofDrawSphere(pos, 2);
     ofPopStyle();
 
     
