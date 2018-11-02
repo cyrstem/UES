@@ -12,6 +12,12 @@
 #include "ofMain.h"
 class Squares{
     public:
+    
+    
+    
+    
+    
+    
     Squares();
     void update();
     void draw();

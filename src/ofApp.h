@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "Particles.h"
+#include "Squares.hpp"
 #include "ofxGui.h"
 #include "ofxSimpleScreenRecorder.h"
 

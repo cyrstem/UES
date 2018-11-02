@@ -230,7 +230,6 @@ void ofApp::spectrumView(){
     light.disable();
     cam.end();
     ofDisableLighting();
-   // ofDisableDepthTest();
 }
 //--------------------------------------------------------------
 void ofApp::draw(){

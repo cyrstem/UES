@@ -16,5 +16,7 @@ void Squares::update(){
 }
 
 void Squares::draw(){
+    
+    ofSetColor(ofColor::white);
     ofDrawRectangle(0, 0, 10, 10);
 }
