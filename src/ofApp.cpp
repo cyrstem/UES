@@ -32,35 +32,35 @@ void ofApp::setup(){
 }
 void ofApp::guiSetups(){
     
-    //GUI CONTROLS PRINCIPALES
-    showData = false;
-    ui.loadFromFile("settings.xml");
-    ui.setup("View Ctrls");
-    ui.setPosition(800,0);
-    ui.add(fullScreen.setup("FullScreen on/off",false));
-    ui.add(camRotate.set("Cam rotate Y",0,10,360));
-    ui.add(reset.setup("Reset Cam"));
-    ui.add(record.setup("Capture Screen ",false));
-    ui.add(resetAll.setup("RESET ALL TODITO"));
-    
-    //Wave Controls
-    audctr.loadFromFile("WaveControlsSet.xml");
-    audctr.setup("Wave Ctrls");
-    audctr.setPosition(800,150);
-    audctr.add(lineaSize.set("Tmno Linea",1.3,0.1,10.5));
-    audctr.add(radius.set("Radio",100,10,300));
-    audctr.add(resolution.set("C- Resolution",100,3,150));
-    audctr.add(fadeAmnt.set("Fade V",15,5,170));
-    audctr.add(luzX.set("Luz X",0,-2000,2000));
-    audctr.add(luzY.set("Luz Y",0,-2000,2000));
-    audctr.add(luzZ.set("Luz Z",0,-2000,2000));
-    audctr.add(shaderOn.setup("Shader Effect",false));
-    audctr.add(fillWave.setup("Wave FIll OFF ",true));
-    audctr.add(c.set("RGBA -Waves-controls",ofColor(255),ofColor(255),ofColor(255)));
-    //GUI Particles
-    prtctr.setup("Particle Ctrls");
-    prtctr.setPosition(1010, 0);
-    prtctr.add(numPtrs.set("size",10,50,100));
+//    //GUI CONTROLS PRINCIPALES
+//    showData = false;
+//    ui.loadFromFile("settings.xml");
+//    ui.setup("View Ctrls");
+//    ui.setPosition(800,0);
+//    ui.add(fullScreen.setup("FullScreen on/off",false));
+//    ui.add(camRotate.set("Cam rotate Y",0,10,360));
+//    ui.add(reset.setup("Reset Cam"));
+//    ui.add(record.setup("Capture Screen ",false));
+//    ui.add(resetAll.setup("RESET ALL TODITO"));
+//    
+//    //Wave Controls
+//    audctr.loadFromFile("WaveControlsSet.xml");
+//    audctr.setup("Wave Ctrls");
+//    audctr.setPosition(800,150);
+//    audctr.add(lineaSize.set("Tmno Linea",1.3,0.1,10.5));
+//    audctr.add(radius.set("Radio",100,10,300));
+//    audctr.add(resolution.set("C- Resolution",100,3,150));
+//    audctr.add(fadeAmnt.set("Fade V",15,5,170));
+//    audctr.add(luzX.set("Luz X",0,-2000,2000));
+//    audctr.add(luzY.set("Luz Y",0,-2000,2000));
+//    audctr.add(luzZ.set("Luz Z",0,-2000,2000));
+//    audctr.add(shaderOn.setup("Shader Effect",false));
+//    audctr.add(fillWave.setup("Wave FIll OFF ",true));
+//    audctr.add(c.set("RGBA -Waves-controls",ofColor(255),ofColor(255),ofColor(255)));
+//    //GUI Particles
+//    prtctr.setup("Particle Ctrls");
+//    prtctr.setPosition(1010, 0);
+//    prtctr.add(numPtrs.set("size",10,50,100));
     
     
     //saving to video setup
@@ -334,7 +334,7 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-    ui.saveToFile("settings.xml");
-    audctr.saveToFile("WaveControlsSet.xml");
+//    ui.saveToFile("settings.xml");
+//    audctr.saveToFile("WaveControlsSet.xml");
 }
 
