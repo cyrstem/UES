@@ -47,7 +47,6 @@ class ofApp : public ofBaseApp{
     ofParameter<float>luzX;
     ofParameter<float>luzY;
     ofParameter<float>luzZ;
-    //ofParameter<glm::vec3>luzPos;
     
     
     ofxToggle fullScreen;

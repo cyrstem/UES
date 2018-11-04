@@ -3,11 +3,11 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(2);
-    ofSetWindowShape(1200, 800);
+    ofSetWindowShape(1220, 800);
     ofSetWindowTitle("UES -v0.1");
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
-    basic.load("Hack-Regular.ttf", 12,true);
+    basic.load("InputMono-Regular.ttf", 12,true);
     
     //fbo
     ofFbo::Settings s;
@@ -24,7 +24,7 @@ void ofApp::setup(){
     guiSetups();
     
     light.setParent(cam);
-    light.dolly(39);
+    //light.dolly(39);
     shader.load("shaders/noise.vert", "shaders/noise.frag");
     
 
@@ -66,14 +66,6 @@ void ofApp::guiSetups(){
     //saving to video setup
     
     mRender.setup(ofGetWidth(),ofGetHeight());
-    
-//    int numParticle =5;
-//    for(int i = 0; i<numParticle; i++){
-//        auto m = ParticleRef(new Particle(5,0,0,0));
-//        mParticle.push_back(m);
-//    }
-
-
 }
 
 //--------------------------------------------------------------
@@ -114,8 +106,6 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::spectrumView(){
     ofEnableAlphaBlending();
-    
-    //ofEnableDepthTest();
     ofEnableLighting();
     light.enable();
     light.setPosition(luzX, luzY, luzZ);
@@ -235,22 +225,29 @@ void ofApp::spectrumView(){
 void ofApp::draw(){
     ofEnableAntiAliasing();
     //mRender.begin();
+    
     fbo.draw(30,20);
-    if(showData ==false){
+    
+    ofSetColor(ofColor::white);
+    //ofNoFill();
+    ofFill();
+    ofDrawRectangle(5, 740,basic.stringWidth(songName)+210, 50);
 
+    
+    
+    
+    ofSetColor(ofColor::black);
+    if(showData ==false){
+        
+//        ofSetColor(ofColor::black);
         basic.drawString("Drop the song here!!", 10, 780);
+ 
     } else{
         basic.drawString("Playing ..."+songName, 10, 780);
     }
 
     //guide  drop song  draw
-    ofPushStyle();
-    ofSetColor(ofColor::white,255);
-    ofNoFill();
-
-    ofSetLineWidth(1);
-    ofDrawRectangle(5, 740,basic.stringWidth(songName)+210, 50);
-    ofPopStyle();
+    ofSetColor(255, 255, 255);
     //GuiS DRAwn
     ui.draw();
 //    colores.draw();
