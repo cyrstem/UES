@@ -21,7 +21,7 @@ void ofApp::setup(){
     fbo.begin();
     ofClear(255, 255, 255,0);
     fbo.end();
-    guiSetups();
+    //guiSetups();
     
     light.setParent(cam);
     light.dolly(39);
@@ -253,7 +253,7 @@ void ofApp::draw(){
     ofDrawRectangle(5, 740,basic.stringWidth(songName)+210, 50);
     ofPopStyle();
     //GuiS DRAwn
-    ui.draw();
+    //ui.draw();
 //    colores.draw();
     audctr.draw();
     prtctr.draw();

@@ -2,7 +2,8 @@
 
 #include "ofMain.h"
 #include "Particles.h"
-#include "ofxGui.h"
+//#include "ofxGui.h"
+#include"ofxDatGui.h"
 #include "ofxSimpleScreenRecorder.h"
 
 
@@ -31,11 +32,11 @@ class ofApp : public ofBaseApp{
 
     float affect;
     ofPolyline circle;
-    
-    //Gui staff ------------------------------
-    ofxPanel ui;
-    ofxPanel audctr;
-    ofxPanel prtctr;
+//    
+//    //Gui staff ------------------------------
+//    ofxPanel ui;
+//    ofxPanel audctr;
+//    ofxPanel prtctr;
 
     
     ofParameter<float>lineaSize;
@@ -47,17 +48,17 @@ class ofApp : public ofBaseApp{
     ofParameter<float>luzY;
     ofParameter<float>luzZ;
     //ofParameter<glm::vec3>luzPos;
-    
-    
-    ofxToggle fullScreen;
-    ofxToggle shaderOn;
-    ofxToggle fillWave;
-    ofxLabel t;
-    ofxButton reset;
-    ofxButton resetAll;
-    
-    ofxToggle record;
-    ofTrueTypeFont basic;
+//    
+//    
+//    ofxToggle fullScreen;
+//    ofxToggle shaderOn;
+//    ofxToggle fillWave;
+//    ofxLabel t;
+//    ofxButton reset;
+//    ofxButton resetAll;
+//    
+//    ofxToggle record;
+//    ofTrueTypeFont basic;
     
     
     
