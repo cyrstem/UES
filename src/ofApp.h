@@ -3,7 +3,9 @@
 #include "ofMain.h"
 #include "Particles.h"
 #include "Squares.hpp"
+#include "ofxFft.h"
 #include "ofxGui.h"
+
 #include "ofxSimpleScreenRecorder.h"
 
 
@@ -27,8 +29,12 @@ class ofApp : public ofBaseApp{
     string songName;
     bool showData;
     bool recordData;
-    ofLight light;
-
+    
+    
+    //light new way
+    
+    ofLight light, spotlight;
+    float time;
 
     float affect;
     ofPolyline circle;
@@ -37,8 +43,9 @@ class ofApp : public ofBaseApp{
     ofxPanel ui;
     ofxPanel audctr;
     ofxPanel prtctr;
+    ofxPanel luzctr;
 
-    
+
     ofParameter<float>lineaSize;
     ofParameter<float>radius;
     ofParameter<int>resolution;
@@ -47,12 +54,17 @@ class ofApp : public ofBaseApp{
     ofParameter<float>luzX;
     ofParameter<float>luzY;
     ofParameter<float>luzZ;
+    ofParameter<float>luzPX;
+    ofParameter<float>luzPY;
+    ofParameter<float>luzPZ;
+    //ofParameter<int>lightOrbit;
     
     
     ofxToggle fullScreen;
     ofxToggle shaderOn;
     ofxToggle fillWave;
     ofxLabel t;
+    ofxLabel lp,ls;
     ofxButton reset;
     ofxButton resetAll;
     
@@ -79,7 +91,15 @@ class ofApp : public ofBaseApp{
     //call Particles  master call
     //Particle p;
     vector<ParticleRef>mParticle;
-
+    
+    
+    
+//----audio analysis
+    ofxFft* fft;
+    ofMutex soundMutex;
+    
+    
+    
     
     
     

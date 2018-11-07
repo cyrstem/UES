@@ -55,13 +55,15 @@ void Particle::draw()
         ofSetColor(255,255,255);
 
         ofRotateRad(360, pos.x, pos.y, pos.z);
-        ofDrawCircle(pos.x, pos.y,pos.z,5+i);
+        //ofDrawRectangle(pos.x, pos.y,pos.z, 5+1, 5+i);
+        //ofDrawCircle(pos.x, pos.y,pos.z,5+i);
         ofPopStyle();
         //ofPopMatrix();
     }
     ofSetColor(color);
     ofFill();
-    ofDrawSphere(pos, 2);
+    ofDrawRectangle(pos.x, pos.y, pos.z, 10,10);
+    //ofDrawSphere(pos, 2);
     ofPopStyle();
 
     

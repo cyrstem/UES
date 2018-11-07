@@ -22,8 +22,17 @@ void ofApp::setup(){
     ofClear(255, 255, 255,0);
     fbo.end();
     guiSetups();
+    //lightsss---------------------------------
     
     light.setParent(cam);
+    light.setPointLight();
+    ofSetSmoothLighting(true);
+    //Light Spot-------------------------------
+    spotlight.setSpotlight();
+    
+    
+    
+    //------------------------------------------
     //light.dolly(39);
     shader.load("shaders/noise.vert", "shaders/noise.frag");
     
@@ -51,9 +60,7 @@ void ofApp::guiSetups(){
     audctr.add(radius.set("Radio",100,10,300));
     audctr.add(resolution.set("C- Resolution",100,3,150));
     audctr.add(fadeAmnt.set("Fade V",15,5,170));
-    audctr.add(luzX.set("Luz X",0,-2000,2000));
-    audctr.add(luzY.set("Luz Y",0,-2000,2000));
-    audctr.add(luzZ.set("Luz Z",0,-2000,2000));
+   
     audctr.add(shaderOn.setup("Shader Effect",false));
     audctr.add(fillWave.setup("Wave FIll OFF ",true));
     audctr.add(c.set("RGBA -Waves-controls",ofColor(255),ofColor(255),ofColor(255)));
@@ -61,6 +68,19 @@ void ofApp::guiSetups(){
     prtctr.setup("Particle Ctrls");
     prtctr.setPosition(1010, 0);
     prtctr.add(numPtrs.set("size",10,50,100));
+    //lux controls
+    luzctr.setup("control Luz");
+    luzctr.setPosition(1010,100);
+    luzctr.add(lp.setup("Point Light",ofToString(light.getPosition())));
+
+    luzctr.add(luzX.set("Point X",0,-2000,2000));
+    luzctr.add(luzY.set("Point Y",0,-2000,2000));
+    luzctr.add(luzZ.set("Point Z",0,-2000,2000));
+
+    luzctr.add(ls.setup("Spot Light",ofToString(spotlight.getPosition())));
+    luzctr.add(luzPX.set("Spot X",0,-2000,2000));
+    luzctr.add(luzPY.set("Spot Y",0,-2000,2000));
+    luzctr.add(luzPZ.set("Spot Z",0,-2000,2000));
     
     
     //saving to video setup
@@ -73,7 +93,11 @@ void ofApp::update(){
     
     
    
-    light.orbitRad(50, 50, 50);
+   // light.orbitRad(50+1, 50+1, 50+1);
+    
+    
+    
+    
     ofSoundUpdate();
     float *spectrum = ofSoundGetSpectrum(128);
     double level = 0;
@@ -92,7 +116,7 @@ void ofApp::update(){
     
     
     
-    glm::vec3 g = glm::vec3(0.1,0.10,0);
+    glm::vec3 g = glm::vec3(0.1,0.10,1);
     for(auto particle:mParticle){
         particle->update(affect);
         particle->applyForce(g);
@@ -101,14 +125,49 @@ void ofApp::update(){
     }
       //cout<<"this is "<<mParticle.size()<<endl;
     
+    
+    time = ofGetElapsedTimef();
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::spectrumView(){
+    //values
+    glm::vec3 ori;
+    ori= glm::vec3(0,0,0);
+    
+    
     ofEnableAlphaBlending();
     ofEnableLighting();
     light.enable();
     light.setPosition(luzX, luzY, luzZ);
+    light.setDiffuseColor(ofColor::white);
+    light.setAttenuation(.5);
+    
+    //ligth look at
+    spotlight.lookAt(ori);
+    spotlight.setPosition(300, 0, 0);
+    spotlight.setDiffuseColor(ofColor::red);
+    spotlight.setSpecularColor(ofColor::darkRed);
+    spotlight.enable();
+    //light shit
+    ofSpherePrimitive sphere;
+    sphere.setPosition(0, 0, 0);
+    sphere.set(radius, 12);
+    
+    ofVec3f spotPos = sphere.getPosition();
+    spotPos.x += cos( time * 2.) * sphere.getRadius() * 1.5;
+    spotPos.y += sin( time ) * sphere.getRadius() * 1.5;
+    spotPos.z += sin( time  ) * sphere.getRadius() * 1.5;
+    
+    spotlight.setPosition(spotPos);
+    
+    spotlight.lookAt(ori);
+    
+    
+    
+    
+
     if (reset) {
         cam.reset();
     }
@@ -125,11 +184,19 @@ void ofApp::spectrumView(){
     ofEnableSmoothing();
     
     ofNoFill();
-    glm::vec3 ori;
+    
   
     
     
-    ori= glm::vec3(0,0,0);
+  
+    
+    
+    
+    
+    
+    
+    
+    
     //if push matrix use always put camera after that  if is camera  by  mouse
     cam.begin();
     //light.enable();
@@ -223,6 +290,9 @@ void ofApp::spectrumView(){
 }
 //--------------------------------------------------------------
 void ofApp::draw(){
+    
+    
+  
     ofEnableAntiAliasing();
     //mRender.begin();
     
@@ -253,6 +323,7 @@ void ofApp::draw(){
 //    colores.draw();
     audctr.draw();
     prtctr.draw();
+    luzctr.draw();
     //end guis
     //recoreded end//
     //mRender.end();
